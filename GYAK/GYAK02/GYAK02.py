@@ -39,7 +39,7 @@ def set_one(array:np.array)-> np.array:
 
 
 def do_transpose(array:np.array)-> np.array:
-    return array.transpose(array)
+    return np.transpose(array)
 
 
 # Készíts egy olyan függvényt ami az array-ben lévő értékeket N tizenedjegyik kerekíti, ha nincs megadva ez a paraméter, akkor legyen az alapértelmezett a kettő 
