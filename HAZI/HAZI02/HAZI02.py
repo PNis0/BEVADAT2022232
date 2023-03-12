@@ -27,10 +27,9 @@ def column_swap(array:np.array)->np.array:
 # egyenlő elemszámúakra kell csak hogy működjön
 
 
-def compare_two_array(arr1:np.array, arr2:np.array)->np.array:
-    equals = np.equal(arr1, arr2)    
-    equal_indexes = np.where(equals)[0]    
-    return equal_indexes
+def compare_two_array(arr1:np.array, arr2:np.array) -> np.array:
+    equal_indices = np.where(arr1 == arr2)[0]
+    return equal_indices
 
 
 # Készíts egy olyan függvényt, ami vissza adja string-ként a megadott array dimenzióit:
@@ -159,19 +158,11 @@ def add_border(arr:np.array)->np.array:
 # list_days()
 
 
-from datetime import datetime, timedelta
-
-def list_days(start, end):
-    start_date = datetime.strptime(start, '%Y-%m')
-    end_date = datetime.strptime(end, '%Y-%m')
-
-    days = np.array([], dtype='datetime64[D]')
-
-    while start_date <= end_date:
-        days = np.concatenate([days, np.array([np.datetime64(start_date)])])
-        start_date += timedelta(days=1)
-
-    return days.astype('datetime64[D]').astype(str)
+def list_days(start_date, end_date):
+    start = np.datetime64(start_date)
+    end = np.datetime64(end_date)
+    days = np.arange(start, end + np.timedelta64(1, 'D'), np.timedelta64(1, 'D'))
+    return np.array([str(day) for day in days])
 
 
 # Írj egy fügvényt ami vissza adja az aktuális dátumot az alábbi formában: YYYY-MM-DD. Térjen vissza egy 'numpy.datetime64' típussal.
@@ -191,8 +182,9 @@ def get_act_date():
 
 
 def sec_from_1970():
-    epoch_start = np.datetime64('1970-01-01T00:00:00')
-    now = np.datetime64('now')
-    return int((now - epoch_start).astype('int64') / 10**9)
+    start_time = np.datetime64('1970-01-01T00:02:00')
+    current_time = np.datetime64('now')
+    elapsed_time = (current_time - start_time) / np.timedelta64(1, 's')
+    return int(elapsed_time)
 
 
