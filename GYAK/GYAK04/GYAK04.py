@@ -40,7 +40,8 @@ függvény neve: get_column
 
 
 def get_column(df, col_name):
-    return df[col_name]
+    new_df = df.copy()
+    return new_df[col_name]
 
 
 '''
@@ -54,7 +55,8 @@ függvény neve: get_top_two
 
 
 def get_top_two(df):
-    sorted_df = df.sort_values('area', ascending=False)
+    new_df = df.copy()
+    sorted_df = new_df.sort_values('area', ascending=False)
     return sorted_df.iloc[:2]
 
 
@@ -70,7 +72,8 @@ függvény neve: population_density
 
 
 def population_density(df):
-    df['density'] = df['population'] / df['area']
+    new_df = df.copy()
+    new_df['density'] = new_df['population'] / new_df['area']
     return df
 
 
@@ -90,8 +93,9 @@ függvény neve: plot_population
 
 
 def plot_population(df):
+    new_df = df.copy()
     fig, ax = plt.subplots()
-    ax.bar(df['country'], df['population']/1000000)
+    ax.bar(new_df['country'], new_df['population']/1000000)
     ax.set_xlabel('Country')
     ax.set_ylabel('Population (millions)')
     ax.set_title('Population of Countries')
@@ -113,12 +117,13 @@ függvény neve: plot_area
 
 
 def plot_area(df):
+    new_df = df.copy()
     fig, ax = plt.subplots()
     ax.set_title('Area of Countries')
     
-    labels = df['country'].values.tolist()
+    labels = new_df['country'].values.tolist()
     
-    data = df['area'].values.tolist()
+    data = new_df['area'].values.tolist()
     
     ax.pie(data, labels=labels)
     
