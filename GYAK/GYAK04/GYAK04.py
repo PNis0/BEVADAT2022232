@@ -28,6 +28,8 @@ stats = {"country": ["Brazil", "Russia", "India", "China", "South Africa"],
 def dict_to_dataframe(d):
     return pd.DataFrame(d)
 
+test_df=dict_to_dataframe(stats)
+
 
 '''
 Készíts egy függvényt ami a bemeneti DataFrame-ből vissza adja csak azt az oszlopot amelynek a neve a bemeneti string-el megegyező.
