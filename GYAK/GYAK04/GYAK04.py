@@ -73,10 +73,10 @@ függvény neve: population_density
 '''
 
 
-def population_density(df):
-    new_df = df.copy()
+def population_density(input_df):
+    new_df = input_df.copy()    
     new_df['density'] = new_df['population'] / new_df['area']
-    return df
+    return new_df
 
 
 '''
@@ -94,13 +94,16 @@ függvény neve: plot_population
 '''
 
 
+
 def plot_population(df):
-    new_df = df.copy()
+    x = df['Country']
+    y = df['Population'] / 1e6 
     fig, ax = plt.subplots()
-    ax.bar(new_df['country'], new_df['population']/1000000)
+    ax.bar(x, y)
     ax.set_xlabel('Country')
     ax.set_ylabel('Population (millions)')
     ax.set_title('Population of Countries')
+    plt.xticks(rotation=90)
     return fig
 
 
