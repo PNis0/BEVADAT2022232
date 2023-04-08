@@ -53,17 +53,58 @@ HAZI-
 """
 
 
-import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from NJCleaner import NJCleaner
+from DecisionTreeClassifier  import DecisionTreeClassifier
+import pandas as pd
 from sklearn.metrics import accuracy_score
 
-data = pd.read_csv('path/to/data.csv')
 
-data = data.drop(['train_id', 'scheduled_time', 'actual_time', 'delay_minutes'], axis=1)
+nj = NJCleaner('./2018_03.csv')
+nj.prep_df()
 
-data['delay'] = data['delay_minutes'].apply(lambda x: 1 if x >= 5 else 0)
 
-data = data.drop(['delay_minutes'], axis=1)
+col_name = ['stop_sequence' , 'from_id' , 'to_id' , 'status' , 'line' , 'type' , 'day', 'part_of_the_day' , 'delay']
+data = pd.read_csv('./data/NJ.csv',skiprows=1, header=None, names=col_name)
 
-train_data, test_data, train_target, test_target = train_test_split(data.drop(['delay'], axis=1), data['delay'], test_size=0.2, random_state=41)
+
+X = data.iloc[:, :-1].values
+Y = data.iloc[:, -1].values.reshape(-1,1)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=.2, random_state=41)
+
+
+classifier = DecisionTreeClassifier(min_samples_split=2, max_depth=4)
+classifier.fit(X_train, Y_train)
+
+Y_pred = classifier.predict(X_test)
+print(accuracy_score(Y_test, Y_pred))
+
+
+
+
+
+# A feladat leírása alapján megcsináltam a .py fáljlt és osztályt. Miután befejeztem a megírását a HAZI06.ipynb-ben leteszteltem. Itt olyan problémákba ütközem mint például:
+# -A program nem találta a csv fájlomat
+# -Nem találta a metódusomat
+# Ezeket sikerül nagynehezen megoldanom.
+# Majd ezek után felparamétereztem a decision tree-t.
+# A tesztelések során sikerült elérnem a %-os accuracy-t 
+#
+# Nehézségek:
+# -Nem találta a program a csv-fájljaimat
+# -Elírások
+# -Feleslege dolgok beleírása
+# -Nem találta a metódusomat
+
+
+#Eredmények:
+#1  min_samples_split=1, max_depth=2 --> accuracy: 0.7915833333333333
+#2  min_samples_split=1, max_depth=3 --> accuracy: 0.7941666666666667
+#3  min_samples_split=1, max_depth=4 --> accuracy: 0.7955
+#4  min_samples_split=2, max_depth=1 --> accuracy: 0.7889166666666667
+#5  min_samples_split=2, max_depth=2 --> accuracy: 0.7915833333333333
+#6  min_samples_split=2, max_depth=3 --> accuracy: 0.7941666666666667
+#7  min_samples_split=2, max_depth=4 --> accuracy: 0.7955
+#8  min_samples_split=2, max_depth=5 --> accuracy: 0.7983333333333333
+#9 min_samples_split=2, max_depth=6 --> accuracy: 0.798
+#10 min_samples_split=2, max_depth=7 --> accuracy: 0.7996666666666666
