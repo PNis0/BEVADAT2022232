@@ -9,7 +9,7 @@ class NJCleaner():
     
     def drop_columns_and_nan(self):
         self.data.drop(['from','to'], axis=1)
-        self.drop.dropna()
+        self.data.dropna()
         return self.data
     
     def convert_date_to_day(self):
@@ -41,7 +41,7 @@ class NJCleaner():
         return self.data
     
     def drop_unnecessary_columns(self):
-        self.data = self.data.drop(['train_id', 'scheduled_time', 'actual_time', 'delay_minutes'], axis=1)
+        self.data = self.data.drop(['train_id', 'actual_time', 'delay_minutes'], axis=1)
         return self.data
     
     def save_first_60k(self,output_path):
@@ -53,6 +53,7 @@ class NJCleaner():
         self.convert_date_to_day()
         self.convert_scheduled_time_to_part_of_the_day()
         self.convert_delay()
+        self.drop_unnecessary_columns()
         self.save_first_60k(path)
 
 
