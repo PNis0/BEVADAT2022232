@@ -88,7 +88,7 @@ print(accuracy_score(Y_test, Y_pred))
 # -Nem találta a metódusomat
 # Ezeket sikerül nagynehezen megoldanom.
 # Majd ezek után felparamétereztem a decision tree-t.
-# A tesztelések során sikerült elérnem a %-os accuracy-t 
+# A tesztelések során sikerült elérnem a 0.798%-os accuracy-t 
 #
 # Nehézségek:
 # -Nem találta a program a csv-fájljaimat
