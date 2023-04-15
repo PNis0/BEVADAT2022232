@@ -44,8 +44,8 @@ class NJCleaner():
         self.data = self.data.drop(['train_id', 'actual_time', 'delay_minutes'], axis=1)
         return self.data
     
-    def save_first_60k(self,output_path):
-        self.data.iloc[:60000].to_csv(output_path, index=False)
+    def save_first_60k(self,path):
+        self.data.iloc[:60000].to_csv(path, index=False)
 
     def prep_df(self, path= 'data/NJ.csv'):
         self.order_by_scheduled_time()
